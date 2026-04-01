@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kim's Donut — Keller, TX</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #F2607A;
+    --pink-light: #FFE8EC;
+    --dark: #1A1018;
+    --white: #FFFFFF;
+    --off-white: #FDFAFA;
+    --muted: #9A8890;
+    --border: rgba(26,16,24,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--off-white);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; width: 100%;
+    z-index: 100;
+    height: 64px;
+    padding: 0 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(253,250,250,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo .name {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--dark);
+    letter-spacing: -0.01em;
+  }
+
+  .nav-logo .name em {
+    font-style: normal;
+    color: var(--pink);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav ul a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dark);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--pink); }
+
+  .nav-phone {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--pink);
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 64px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 64px 80px 56px;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    bottom: -120px; right: -120px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: var(--pink-light);
+    z-index: 0;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--pink);
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(3.6rem, 5.5vw, 5.2rem);
+    line-height: 1.0;
+    color: var(--dark);
+    position: relative;
+    z-index: 1;
+    letter-spacing: -0.02em;
+    animation: fadeUp 0.6s ease 0.25s both;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--pink);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-top: 20px;
+    margin-bottom: 40px;
+    max-width: 380px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.6s ease 0.55s both;
+  }
+
+  .badge {
+    padding: 7px 16px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .badge-outline { border: 1px solid var(--border); color: var(--muted); }
+  .badge-filled { background: var(--pink); color: white; }
+
+  .hero-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+    background: var(--pink-light);
+  }
+
+  .hero-img { overflow: hidden; }
+  .hero-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .hero-img:hover img { transform: scale(1.04); }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--dark);
+    padding: 12px 0;
+    overflow: hidden;
+  }
+
+  .marquee-inner {
+    display: flex;
+    gap: 48px;
+    animation: marquee 24s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-inner span {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.7);
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+
+  .marquee-inner .accent { color: var(--pink); font-style: normal; }
+
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* ABOUT */
+  .about {
+    padding: 120px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--pink);
+  }
+
+  .about h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    color: var(--dark);
+  }
+
+  .about p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .stat {
+    padding: 32px 28px;
+    background: var(--white);
+    border: 1px solid var(--border);
+  }
+
+  .stat-number {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 2.6rem;
+    color: var(--pink);
+    line-height: 1;
+    display: block;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* MENU */
+  .menu-section {
+    background: var(--dark);
+    padding: 120px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .menu-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--pink);
+  }
+
+  .menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+  }
+
+  .menu-header .section-label { color: var(--pink); }
+  .menu-header .section-label::before { background: var(--pink); }
+
+  .menu-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .menu-note {
+    font-size: 0.82rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.25);
+    max-width: 200px;
+    text-align: right;
+    line-height: 1.65;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .menu-item {
+    background: var(--dark);
+    padding: 36px 30px;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.3s;
+    position: relative;
+  }
+
+  .menu-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--pink);
+    transition: width 0.35s ease;
+  }
+
+  .menu-item:hover::after { width: 100%; }
+  .menu-item:hover { background: rgba(255,255,255,0.03); }
+
+  .item-name {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .item-desc {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+
+  .item-price {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--pink);
+    text-transform: uppercase;
+  }
+
+  .menu-item.featured { background: var(--pink); }
+  .menu-item.featured:hover { background: #e8516a; }
+  .menu-item.featured::after { background: white; }
+  .menu-item.featured .item-name { color: white; }
+  .menu-item.featured .item-desc { color: rgba(255,255,255,0.65); }
+  .menu-item.featured .item-price { color: rgba(255,255,255,0.8); }
+
+  /* REVIEWS */
+  .reviews-section {
+    padding: 120px 56px;
+    background: var(--white);
+  }
+
+  .reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+  }
+
+  .reviews-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    color: var(--dark);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .review-card {
+    padding: 36px 32px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .review-card:hover { border-color: var(--pink); transform: translateY(-4px); }
+
+  .stars { font-size: 0.75rem; color: var(--pink); letter-spacing: 3px; margin-bottom: 16px; }
+
+  .review-text {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--dark);
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .review-author {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* HOURS */
+  .hours-section {
+    background: var(--off-white);
+    padding: 100px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .hours-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+
+  .hours-section .sub {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 0;
+    line-height: 1.7;
+  }
+
+  .hours-table { width: 100%; border-collapse: collapse; }
+
+  .hours-table tr { border-bottom: 1px solid var(--border); }
+  .hours-table tr:last-child { border-bottom: none; }
+
+  .hours-table td {
+    padding: 14px 0;
+    font-size: 0.9rem;
+  }
+
+  .hours-table td:first-child {
+    font-weight: 500;
+    color: var(--dark);
+    width: 50%;
+  }
+
+  .hours-table td:last-child {
+    color: var(--muted);
+    font-weight: 300;
+    text-align: right;
+  }
+
+  .hours-table tr.weekend td:first-child { color: var(--pink); }
+
+  /* VISIT */
+  .visit-section {
+    background: var(--pink);
+    padding: 120px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .visit-section::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; right: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    pointer-events: none;
+  }
+
+  .visit-section .section-label { color: rgba(255,255,255,0.6); }
+  .visit-section .section-label::before { background: rgba(255,255,255,0.6); }
+
+  .visit-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    color: white;
+    margin-bottom: 40px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .visit-detail { display: flex; flex-direction: column; gap: 24px; }
+  .detail-row { display: flex; gap: 18px; align-items: flex-start; }
+
+  .detail-icon {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+
+  .detail-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 4px;
+  }
+
+  .detail-value { color: white; font-size: 0.95rem; line-height: 1.6; font-weight: 400; }
+  .detail-value a { color: white; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.3); }
+
+  .map-card {
+    background: var(--white);
+    height: 340px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    text-decoration: none;
+    transition: box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 8px 40px rgba(26,16,24,0.12);
+    position: relative; z-index: 1;
+  }
+
+  .map-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(26,16,24,0.18); }
+  .map-emoji { font-size: 2.8rem; }
+  .map-cta { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pink); }
+  .map-address {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    padding: 44px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-logo .name {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+
+  .footer-logo .name em { font-style: normal; color: var(--pink); }
+  .footer-tagline { font-family: 'DM Serif Display', serif; font-style: italic; color: rgba(255,255,255,0.25); font-size: 0.88rem; letter-spacing: -0.01em; }
+  .footer-copy { font-size: 0.72rem; font-weight: 300; color: rgba(255,255,255,0.2); letter-spacing: 0.05em; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 60px 28px; }
+    .hero-right { height: 55vw; }
+    .about, .visit-section, .hours-section { grid-template-columns: 1fr; padding: 80px 28px; gap: 48px; }
+    .menu-section, .reviews-section { padding: 80px 28px; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    footer { padding: 36px 24px; flex-direction: column; gap: 14px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span class="name"><em>Kim's</em> Donut</span>
+  </div>
+  <ul>
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#hours">Hours</a></li>
+    <li><a href="#visit">Visit Us</a></li>
+  </ul>
+  <a class="nav-phone" href="tel:4697946419">(469) 794-6419</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Keller, Texas · North on 377</div>
+    <h1 class="hero-title"><em>Kim's</em><br>Donut</h1>
+    <p class="hero-sub">Traditional style donuts, fresh every morning. A family-run shop proud to be part of the Keller neighborhood.</p>
+    <div class="hero-badges">
+      <span class="badge badge-filled">Family Owned</span>
+      <span class="badge badge-outline">Made Fresh Daily</span>
+      <span class="badge badge-outline">Open at 5am</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img" style="grid-column:1;grid-row:span 2;">
+      <img src="Screenshot_2026-04-01_at_10_46_43_AM.png" alt="Kim's Donut full display case">
+    </div>
+    <div class="hero-img">
+      <img src="Screenshot_2026-04-01_at_10_47_23_AM.png" alt="Welcome to Kim's Donut chalkboard sign">
+    </div>
+    <div class="hero-img">
+      <img src="Screenshot_2026-04-01_at_10_46_52_AM.png" alt="Kim's Donut seating area">
+    </div>
+  </div>
+</section>
+
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Fresh Donuts</span><span class="accent"> · </span>
+    <span>Sausage Rolls</span><span class="accent"> · </span>
+    <span>Traditional Style</span><span class="accent"> · </span>
+    <span>Open at 5am</span><span class="accent"> · </span>
+    <span>Keller, Texas</span><span class="accent"> · </span>
+    <span>Family Owned</span><span class="accent"> · </span>
+    <span>Not Too Sweet</span><span class="accent"> · </span>
+    <span>Fresh Donuts</span><span class="accent"> · </span>
+    <span>Sausage Rolls</span><span class="accent"> · </span>
+    <span>Traditional Style</span><span class="accent"> · </span>
+    <span>Open at 5am</span><span class="accent"> · </span>
+    <span>Keller, Texas</span><span class="accent"> · </span>
+    <span>Family Owned</span><span class="accent"> · </span>
+    <span>Not Too Sweet</span><span class="accent"> · </span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-text">
+    <div class="section-label">Our Story</div>
+    <h2>Keller's newest morning tradition.</h2>
+    <p>Kim's Donut is a family-run shop proud to call Keller home. We're here to share fresh donuts and sausage rolls with the community — traditional style, not drenched in icing, not too sweet.</p>
+    <p>We open at 5am and bake fresh every single day. Come early — by noon, we're almost out.</p>
+  </div>
+  <div class="about-stats">
+    <div class="stat"><span class="stat-number">5am</span><span class="stat-label">Open Daily</span></div>
+    <div class="stat"><span class="stat-number">Daily</span><span class="stat-label">Fresh Baked</span></div>
+    <div class="stat"><span class="stat-number">★ 5.0</span><span class="stat-label">Google Rating</span></div>
+    <div class="stat"><span class="stat-number">Family</span><span class="stat-label">Owned & Run</span></div>
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <div class="menu-header">
+    <div>
+      <div class="section-label">The Menu</div>
+      <h2>Traditional. Fresh. Daily.</h2>
+    </div>
+    <p class="menu-note">Selection varies. Come early — we sell out by close.</p>
+  </div>
+  <div style="margin-bottom:32px;">
+    <div style="font-size:0.72rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;">By the Piece</div>
+    <div class="menu-grid">
+      <div class="menu-item featured">
+        <div class="item-name">Glazed Donut</div>
+        <div class="item-desc">Classic glazed donut, available by the piece.</div>
+        <div class="item-price">$1.08</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Chocolate Donut</div>
+        <div class="item-desc">Chocolate donut, available by the piece.</div>
+        <div class="item-price">$1.18</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Maple Donut</div>
+        <div class="item-desc">Sweet fried pastry coated in a rich maple glaze.</div>
+        <div class="item-price">$1.54</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Sprinkle Donut</div>
+        <div class="item-desc">Chocolate, vanilla, or strawberry — all with sprinkles.</div>
+        <div class="item-price">$1.54</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Twist</div>
+        <div class="item-desc">Glazed, cinnamon glazed, or chocolate.</div>
+        <div class="item-price">$1.79</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Bar</div>
+        <div class="item-desc">Chocolate, maple, vanilla icing, or rounded jelly.</div>
+        <div class="item-price">$1.79</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Apple Fritter</div>
+        <div class="item-desc">Crispy fried dough packed with apple chunks and a sweet glaze.</div>
+        <div class="item-price">$2.14</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Cinnamon Roll</div>
+        <div class="item-desc">Each.</div>
+        <div class="item-price">$2.14</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Character Donuts</div>
+        <div class="item-desc">Whimsical designs with vibrant icings and toppings. Ask what's available today.</div>
+        <div class="item-price">$2.09</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Croissant Donut</div>
+        <div class="item-desc">Each.</div>
+        <div class="item-price">$2.99</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px;">
+    <div style="font-size:0.72rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;">Donut Holes</div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="item-name">Glazed</div>
+        <div class="item-desc">Small, round, and coated in a smooth sugary glaze.</div>
+        <div class="item-price">$2.30</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Chocolate</div>
+        <div class="item-desc">Deep-fried holes coated in a rich chocolate glaze.</div>
+        <div class="item-price">$3.20</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Strawberry</div>
+        <div class="item-desc">Filled with sweet strawberry jam, dusted with powdered sugar.</div>
+        <div class="item-price">$3.20</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Chocolate Sprinkle</div>
+        <div class="item-desc">Chocolate icing and colorful sprinkles.</div>
+        <div class="item-price">$3.50</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div style="font-size:0.72rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;">By the Dozen</div>
+    <div class="menu-grid">
+      <div class="menu-item featured">
+        <div class="item-name">Dozen Glazed</div>
+        <div class="item-desc">11 glazed donuts — one's on us.</div>
+        <div class="item-price">$11.90</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Dozen Chocolate</div>
+        <div class="item-desc">Rich, chocolate-glazed donuts with a soft, fluffy interior.</div>
+        <div class="item-price">$12.90</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Half & Half</div>
+        <div class="item-desc">6 glazed + 6 chocolate.</div>
+        <div class="item-price">$11.90</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-name">Assorted Dozen</div>
+        <div class="item-desc">3 glazed, 2 chocolate, 3 cake, 1 cinnamon roll, sprinkle donuts.</div>
+        <div class="item-price">$16.50</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews-section" id="reviews">
+  <div class="reviews-header">
+    <div>
+      <div class="section-label">What People Say</div>
+      <h2>One of the all-time favorites.</h2>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">My family loves this donut shop. Their donuts are so good and their sausage rolls are super good too. They have a lot of cute selections first thing in the morning.</p>
+      <div class="review-author">Courtney C. — Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Service is fantastic and the donuts are delicious. Not drenched in icing — they are traditional style donuts, and not too sweet.</p>
+      <div class="review-author">Cassandra R. — Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">As someone who eats donuts everywhere, Kim's Donuts in North Keller on 377 has to be one of my all-time favorite donut shops.</p>
+      <div class="review-author">Rodney R. — Google Review</div>
+    </div>
+  </div>
+</section>
+
+<section class="hours-section" id="hours">
+  <div>
+    <div class="section-label">Hours</div>
+    <h2>We're up before you are.</h2>
+    <p class="sub">Open early seven days a week. Come before 10am for the best selection — we're almost out by close.</p>
+  </div>
+  <table class="hours-table">
+    <tr><td>Monday</td><td>5:00 AM – 12:00 PM</td></tr>
+    <tr><td>Tuesday</td><td>5:00 AM – 12:00 PM</td></tr>
+    <tr><td>Wednesday</td><td>5:00 AM – 12:00 PM</td></tr>
+    <tr><td>Thursday</td><td>5:00 AM – 12:00 PM</td></tr>
+    <tr><td>Friday</td><td>5:00 AM – 12:00 PM</td></tr>
+    <tr class="weekend"><td>Saturday</td><td>5:30 AM – 12:00 PM</td></tr>
+    <tr class="weekend"><td>Sunday</td><td>5:30 AM – 12:00 PM</td></tr>
+  </table>
+</section>
+
+<section class="visit-section" id="visit">
+  <div>
+    <div class="section-label">Find Us</div>
+    <h2>Come see for yourself.</h2>
+    <div class="visit-detail">
+      <div class="detail-row">
+        <div class="detail-icon">📍</div>
+        <div>
+          <div class="detail-label">Address</div>
+          <div class="detail-value">1500 N Main St, Suite 100<br>Keller, TX 76248</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">📞</div>
+        <div>
+          <div class="detail-label">Phone</div>
+          <div class="detail-value"><a href="tel:4697946419">(469) 794-6419</a></div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">🕐</div>
+        <div>
+          <div class="detail-label">Hours</div>
+          <div class="detail-value">Mon–Fri: 5:00 AM – 12:00 PM<br>Sat–Sun: 5:30 AM – 12:00 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="https://maps.google.com/?q=1500+N+Main+St+Keller+TX+76248" target="_blank" class="map-card">
+    <div class="map-emoji">🗺️</div>
+    <div class="map-cta">Open in Google Maps</div>
+    <div class="map-address">1500 N Main St, Suite 100<br>Keller, TX 76248</div>
+  </a>
+</section>
+
+<footer>
+  <div class="footer-logo"><span class="name"><em>Kim's</em> Donut</span></div>
+  <div class="footer-tagline">Fresh every morning, Keller.</div>
+  <div class="footer-copy">© 2025 Kim's Donut · Keller, TX</div>
+</footer>
+
+</body>
+</html>
